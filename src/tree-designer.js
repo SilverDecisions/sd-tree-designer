@@ -535,7 +535,7 @@ export class TreeDesigner {
             if(d.folded){
                 let button = d3.select(nodeElem).selectOrAppend('text.sd-unfold-button')
                     .text("[+]")
-                    .on('click dbclick', ()=>self.foldSubtree(d, false));
+                    .on('click dbclick mousedown', ()=>self.foldSubtree(d, false)); //firefox detects only mousedown event - related to drag handler
 
                 self.layout.nodeUnfoldButtonPosition(button);
                 Tooltip.attach(button, i18n.t('contextMenu.node.unfold'));
