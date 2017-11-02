@@ -1,6 +1,6 @@
 {
   "name": "sd-tree-designer",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "SilverDecisions tree designer module",
   "main": "index.js",
   "scripts": {
@@ -119,6 +119,6 @@
     "hammerjs": "^2.0.8",
     "i18next": "^10.0.3",
     "sd-utils": "0.1.9",
-    "sd-model": "0.2.4"
+    "sd-model": "0.2.5"
   }
 }

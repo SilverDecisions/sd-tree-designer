@@ -31,7 +31,7 @@ export class Layout{
 
     treeMargin = 50;
     targetSymbolSize={};
-    nodeSeparation = (a, b) => a.parent == b.parent ? 1 : 1.2
+    nodeSeparation = (a, b) => a.parent === b.parent ? 1 : 1.2
 
     constructor(treeDesigner, data, config){
         this.treeDesigner = treeDesigner;
@@ -55,7 +55,7 @@ export class Layout{
     }
 
     isManualLayout(){
-        return this.config.type == Layout.MANUAL_LAYOUT_NAME;
+        return this.config.type === Layout.MANUAL_LAYOUT_NAME;
     }
 
     getNewChildLocation(parent){
@@ -112,7 +112,7 @@ export class Layout{
         var newLocation = new model.Point(node.location);
         while(colidingNode = findCollidingNode(node, newLocation)){
             changed=true;
-            var sameParent = node.$parent && colidingNode.$parent && node.$parent==colidingNode.$parent;
+            var sameParent = node.$parent && colidingNode.$parent && node.$parent===colidingNode.$parent;
             if(sameParent){
                 newLocation.move(stepXsameParent, stepYsameParent);
             }else{
@@ -310,7 +310,7 @@ export class Layout{
 
     setGridWidth(width, withoutStateSaving){
         var self=this;
-        if(this.config.gridWidth==width){
+        if(this.config.gridWidth===width){
             return;
         }
         if(!withoutStateSaving){
@@ -333,7 +333,7 @@ export class Layout{
 
     setGridHeight(gridHeight, withoutStateSaving){
         var self=this;
-        if(this.config.gridHeight==gridHeight){
+        if(this.config.gridHeight===gridHeight){
             return;
         }
         if(!withoutStateSaving){
@@ -356,7 +356,7 @@ export class Layout{
 
     setNodeSize(nodeSize, withoutStateSaving){
         var self=this;
-        if(this.config.nodeSize==nodeSize){
+        if(this.config.nodeSize===nodeSize){
             return;
         }
         if(!withoutStateSaving){
@@ -383,7 +383,7 @@ export class Layout{
 
     setEdgeSlantWidthMax(width, withoutStateSaving){
         var self=this;
-        if(this.config.edgeSlantWidthMax==width){
+        if(this.config.edgeSlantWidthMax===width){
             return;
         }
         if(!withoutStateSaving){
@@ -441,7 +441,7 @@ export class Layout{
 
 
             var layout;
-            if(type=='cluster'){
+            if(type==='cluster'){
                 layout = d3.cluster();
             }else{
                 layout = d3.tree();
@@ -524,7 +524,7 @@ export class Layout{
         });
 
 
-        var revertX = pivot && self.config.limitNodePositioning && (pivot.location.x == pivot.$location.x);
+        var revertX = pivot && self.config.limitNodePositioning && (pivot.location.x === pivot.$location.x);
 
         nodes.forEach(d=>{
             if(revertX){
