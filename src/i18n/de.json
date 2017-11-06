@@ -21,6 +21,9 @@
                 "terminal": "Als Endknoten"
             },
             "selectSubtree": "Teilbaum wählen",
+            "fold": "Teilbaum falten",
+            "unfold": "Teilbaum entfalten",
+			
             "flipSubtree": "Teilbaum umdrehen"
         },
         "edge":{

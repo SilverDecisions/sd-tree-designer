@@ -21,6 +21,8 @@
                 "terminal": "Comme un noeud terminal"
             },
             "selectSubtree": "Sélectionner une sous-arborescence",
+            "fold": "Plier sous-arbre",
+            "unfold": "Déplier arbre sous-arbre",
             "flipSubtree": "Basculer sous-arbre"
         },
         "edge":{

@@ -21,6 +21,8 @@
                 "terminal": "Come Terminal Node"
             },
             "selectSubtree": "Seleziona Sotto-albero",
+            "fold": "Piega sotto-albero",
+            "unfold": "Dispiegarsi sotto-albero",			
             "flipSubtree": "Ribalta sotto-albero"
         },
         "edge":{

@@ -22,6 +22,8 @@
                 "terminal": "Jako Węzeł Końcowy"
             },
             "selectSubtree": "Zaznacz poddrzewo",
+            "fold": "Zwiń poddrzewo",
+            "unfold": "Rozwiń poddrzewo",
             "flipSubtree": "Przewróć poddrzewo"
         },
         "edge":{
