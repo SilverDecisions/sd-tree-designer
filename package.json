@@ -104,7 +104,8 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.9.0",
-    "yargs": "^10.0.3"
+    "yargs": "^10.0.3",
+    "sd-computations": "0.3.5"
   },
   "dependencies": {
     "d3-array": "^1.0.1",

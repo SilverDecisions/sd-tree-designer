@@ -221,4 +221,19 @@ export class AppUtils {
         }
         return (el.offsetParent === null)
     }
+
+    static getJSON(url, callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', url, true);
+        xhr.responseType = 'json';
+        xhr.onload = function () {
+            var status = xhr.status;
+            if (status == 200) {
+                callback(xhr.response, null);
+            } else {
+                callback(null, status);
+            }
+        };
+        xhr.send();
+    }
 }

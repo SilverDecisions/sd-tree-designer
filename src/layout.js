@@ -182,14 +182,18 @@ export class Layout{
     }
 
     nodeAggregatedPayoffPosition(selection) {
-        var fontSize = 12;
         var x = this.config.nodeSize / 2 + 7;
-        Layout.setHangingPosition(selection)
+        var self = this;
+        selection
             .attr('x', x)
-            .attr('y', d=>{
+            .attr('y', function(d){
+                let fontSize = parseInt(AppUtils.getFontSize(this));
                 let items = d.displayValue('aggregatedPayoff');
                 let number = Utils.isArray(items) ? items.filter(it=>it !== undefined).length : 1;
-                return -Math.max(number*fontSize + number > 1 ? 0 : 5, this.config.nodeSize / 2)+ (number >  1 ? 2 : 5)
+                if(number>1){
+                    return -this.getBBox().height/2 + fontSize/2;
+                }
+                return -Math.max(2, 1.8* self.config.nodeSize/fontSize);
             });
 
         selection.selectAll('tspan').attr('x', x);
@@ -199,10 +203,21 @@ export class Layout{
     }
 
     nodeProbabilityToEnterPosition(selection) {
-        var fontSize = 12;
-        return selection
+        var self = this;
+
+        return Layout.setHangingPosition(selection)
             .attr('x', this.config.nodeSize / 2 + 7)
-            .attr('y', Math.max(fontSize+ 5, this.config.nodeSize / 2) -5)
+            .attr('y', function(d){
+                let fontSize = parseInt(AppUtils.getFontSize(this));
+                let aggregatedPayoffs = d.displayValue('aggregatedPayoff');
+                let aggregatedPayoffsNumber = Utils.isArray(aggregatedPayoffs) ? aggregatedPayoffs.filter(it=>it !== undefined).length : 1;
+                if(aggregatedPayoffsNumber>1){
+
+                    return fontSize*0.6
+                }
+
+                return Math.max(2, 1.8* self.config.nodeSize/fontSize);
+            })
             // .attr('text-anchor', 'middle')
             // .attr('dominant-baseline', 'central')
     }
@@ -216,7 +231,7 @@ export class Layout{
     }
 
     nodeUnfoldButtonPosition(selection) {
-        var fontSize = 12;
+
         return selection
             .attr('x', this.config.nodeSize / 2 + 5)
             .attr('y', 0)
