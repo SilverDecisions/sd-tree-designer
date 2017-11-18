@@ -133,6 +133,11 @@ export class NodeContextMenu extends ContextMenu {
 
     static getNodeConversionOptions(d, treeDesigner){
         var options = [];
+
+        if(d.folded){
+            return [];
+        }
+
         var allAllowedTypes = [model.DecisionNode.$TYPE, model.ChanceNode.$TYPE, model.TerminalNode.$TYPE];
 
         if(!d.childEdges.length && d.$parent){
