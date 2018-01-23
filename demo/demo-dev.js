@@ -10,6 +10,7 @@ var TreeDesigner = module.TreeDesigner;
 var AppUtils = module.AppUtils;
 
 
+
 var data = AppUtils.getJSON("./data/sample-tree.json", function(data, err){
 
     console.log(data);
@@ -17,8 +18,6 @@ var data = AppUtils.getJSON("./data/sample-tree.json", function(data, err){
     cm.setData(dataModel);
     cm.recompute();
     cm.updateDisplayValues();
-
-    var
 
     app = new TreeDesigner('#app-container', dataModel,{
         "fontSize": "12px"

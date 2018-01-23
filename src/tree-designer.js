@@ -25,6 +25,7 @@ export class TreeDesignerConfig {
         top: 25,
         bottom: 25
     };
+    scale = 1;
     lng = 'en';
     layout= {
         type: 'tree',
@@ -234,6 +235,7 @@ export class TreeDesigner {
         withTransitions = !self.config.disableAnimations && withTransitions;
         this.redrawDiagramTitle();
         this.redrawDiagramDescription();
+        this.updateScale(withTransitions);
         this.updateMargin(withTransitions);
         if(withTransitions){
             self.transitionPrev = self.transition;
@@ -265,7 +267,9 @@ export class TreeDesigner {
         this.svg = this.container.selectOrAppend('svg.sd-tree-designer');
         this.svg.attr('width', this.availableWidth).attr('height', this.availableHeight);
 
-        this.mainGroup = this.svg.selectOrAppend('g.main-group');
+        this.wrapperGroup = this.svg.selectOrAppend('g.sd-wrapper-group');
+        this.mainGroup = this.wrapperGroup.selectOrAppend('g.main-group');
+        this.updateScale();
         this.updateMargin();
 
 
@@ -330,6 +334,37 @@ export class TreeDesigner {
         Utils.deepExtend(this.config.margin, margin);
         this.redrawDiagramTitle();
         this.updateMargin(true);
+    }
+
+
+    updateScale(withTransitions){
+        var self = this;
+        var scale = this.config.scale;
+        var group = this.wrapperGroup;
+        if(withTransitions){
+            group = group.transition();
+        }
+
+        group.attr("transform", "scale(" + scale + ")").on("end", ()=> self.updatePlottingRegionSize());
+    }
+
+    setScale(scale, withoutStateSaving){
+        var self=this;
+        if(!withoutStateSaving){
+            this.data.saveState({
+                data:{
+                    scale: Utils.clone(self.config.scale)
+                },
+                onUndo: (data)=> {
+                    self.setScale(data.scale, true);
+                },
+                onRedo: (data)=> {
+                    self.setScale(scale, true);
+                }
+            });
+        }
+        this.config.scale = scale;
+        this.updateScale(true);
     }
 
     initContainer(containerIdOrElem) {
@@ -862,7 +897,7 @@ export class TreeDesigner {
     initBrush() {
         var self = this;
 
-        var brushContainer = self.brushContainer = this.brushContainer= this.svg.selectOrInsert("g.brush", ":first-child")
+        var brushContainer = self.brushContainer = this.brushContainer= this.wrapperGroup.selectOrInsert("g.brush", ":first-child")
             .attr("class", "brush");
 
         var brush = this.brush = d3.brush()
