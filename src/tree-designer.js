@@ -389,15 +389,18 @@ export class TreeDesigner {
         var svgWidth = this.svg.attr('width');
         var svgHeight = this.svg.attr('height');
         var mainGroupBox = this.mainGroup.node().getBBox();
-        var newSvgWidth = mainGroupBox.width+mainGroupBox.x+margin.left+margin.right;
+        let boxWidth = mainGroupBox.width;
+        var newSvgWidth = boxWidth+mainGroupBox.x+margin.left+margin.right;
+        newSvgWidth  *= this.config.scale;
         this.container.classed('with-overflow-x', newSvgWidth>=this.availableWidth);
         newSvgWidth = Math.max(newSvgWidth, this.availableWidth);
         if(svgWidth!=newSvgWidth){
             changed = true;
             this.svg.attr('width', newSvgWidth);
         }
-        var newSvgHeight = mainGroupBox.height+mainGroupBox.y+this.topMargin+margin.bottom;
-
+        let boxHeight = mainGroupBox.height;
+        var newSvgHeight = boxHeight+mainGroupBox.y+this.topMargin+margin.bottom;
+        newSvgHeight *= this.config.scale;
         this.container.classed('with-overflow-y', newSvgHeight>=this.availableHeight);
         newSvgHeight = Math.max(newSvgHeight, this.availableHeight);
         if(svgHeight!=newSvgHeight){
