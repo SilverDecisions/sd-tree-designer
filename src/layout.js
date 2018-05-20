@@ -302,11 +302,25 @@ export class Layout{
     }
 
     getTextMinX(d){
-        return 0;
+        let minX = 0;
+        if(d){
+            let bb = this.treeDesigner.getTextD3Selection(d).select('text').node().getBBox();
+            if (bb.x < 0) {
+                minX -= bb.x;
+            }
+        }
+        return minX;
     }
 
     getTextMinY(d){
-        return 0;
+        let minY = 0;
+        if(d){
+            let bb = this.treeDesigner.getTextD3Selection(d).select('text').node().getBBox();
+            if (bb.y < 0) {
+                minY -= bb.y;
+            }
+        }
+        return minY;
     }
 
     getTextMaxX(d){
@@ -574,17 +588,21 @@ export class Layout{
             }
         }
 
-        let minY = d3.min(texts, d=>d.location.y);
-        if(minY + dy < self.getTextMinY()){
-            dy = self.getTextMinY() - minY;
-        }
+
 
         texts.forEach(d=>{
+
+
+
+
             if(limit){
                 let minX = self.getTextMinX(d);
                 let maxX = self.getTextMaxX(d);
+                let minY = self.getTextMinY(d);
+
+
                 d.location.x = Math.min(Math.max(d.location.x+dx, minX), maxX);
-                d.location.y += dy;
+                d.location.y = Math.max(d.location.y+dy, minY);
 
             }else{
                 d.location.move(dx, dy);
