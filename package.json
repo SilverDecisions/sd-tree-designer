@@ -1,6 +1,6 @@
 {
   "name": "sd-tree-designer",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "SilverDecisions tree designer module",
   "main": "index.js",
   "scripts": {
