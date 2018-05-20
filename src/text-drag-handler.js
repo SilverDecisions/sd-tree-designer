@@ -66,8 +66,7 @@ export class TextDragHandler{
         var dx = d3.event.x - self.prevDragEvent.x;
         var dy = d3.event.y- self.prevDragEvent.y;
 
-        draggedText.location.move(dx, dy);
-        self.treeDesigner.updateTextPosition(draggedText);
+        self.treeDesigner.layout.moveTexts([draggedText], dx, dy);
 
         self.prevDragEvent = d3.event;
         self.treeDesigner.updatePlottingRegionSize();

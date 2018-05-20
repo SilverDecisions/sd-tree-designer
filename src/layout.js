@@ -301,6 +301,18 @@ export class Layout{
       return this.config.nodeSize + 30;
     }
 
+    getTextMinX(d){
+        return 0;
+    }
+
+    getTextMinY(d){
+        return 0;
+    }
+
+    getTextMaxX(d){
+        return Number.MAX_SAFE_INTEGER;
+    }
+
 
     getNodeMinX(d){
         var self = this;
@@ -320,7 +332,7 @@ export class Layout{
         if(d && d.childEdges.length){
             return d3.min(d.childEdges, e=>!e.childNode.$hidden ? e.childNode.location.x : 9999999)-self.getMinMarginBetweenNodes();
         }
-        return 9999999;
+        return Number.MAX_SAFE_INTEGER;
     }
 
     setGridWidth(width, withoutStateSaving){
@@ -548,6 +560,38 @@ export class Layout{
             self.treeDesigner.updateNodePosition(d);
         });
 
+
+    }
+
+    moveTexts(texts, dx, dy){
+        let self = this;
+        let limit = self.config.limitTextPositioning;
+        if(limit){
+            if(dx<0){
+                texts.sort((a,b)=>a.location.x-b.location.x);
+            }else{
+                texts.sort((a,b)=>b.location.x-a.location.x);
+            }
+        }
+
+        let minY = d3.min(texts, d=>d.location.y);
+        if(minY + dy < self.getTextMinY()){
+            dy = self.getTextMinY() - minY;
+        }
+
+        texts.forEach(d=>{
+            if(limit){
+                let minX = self.getTextMinX(d);
+                let maxX = self.getTextMaxX(d);
+                d.location.x = Math.min(Math.max(d.location.x+dx, minX), maxX);
+                d.location.y += dy;
+
+            }else{
+                d.location.move(dx, dy);
+            }
+            self.treeDesigner.updateTextPosition(d);
+
+        });
 
     }
 

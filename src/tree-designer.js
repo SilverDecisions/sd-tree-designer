@@ -31,6 +31,7 @@ export class TreeDesignerConfig {
         type: 'tree',
         nodeSize: 40,
         limitNodePositioning: true,
+        limitTextPositioning: true,
         gridHeight: 75,
         gridWidth: 150,
         edgeSlantWidthMax: 20
