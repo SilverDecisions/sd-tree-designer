@@ -9,6 +9,7 @@ export class NodeDragHandler{
     config;
 
     drag;
+    stateSnapshot = null;
 
 
     constructor(treeDesigner, data){
@@ -49,6 +50,7 @@ export class NodeDragHandler{
             return;
         }
         self.ignoredDrag=false;
+        self.stateSnapshot = self.data.createStateSnapshot();
 
         // self.treeDesigner.layout.disableAutoLayout();
         ContextMenu.hide();
@@ -69,11 +71,12 @@ export class NodeDragHandler{
             return;
         }
 
-        if(self.dragEventCount==2){
-            self.data.saveState();
+        if(self.dragEventCount===2 && self.stateSnapshot){
+            self.data.saveStateFromSnapshot(self.stateSnapshot); // TODO save only if something has really changed
+            self.stateSnapshot = null;
         }
         self.dragEventCount++;
-        if(self.selectedNodes.length>5 && self.dragEventCount%2!=1){
+        if(self.selectedNodes.length>5 && self.dragEventCount%2!==1){
             return;
         }
 
