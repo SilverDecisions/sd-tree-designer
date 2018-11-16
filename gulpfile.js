@@ -6,7 +6,6 @@ var browserSync = require('browser-sync').create();
 var argv = require('yargs').argv;
 
 var browserify = require("browserify");
-var resolutions = require('browserify-resolutions');
 var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var buffer = require('vinyl-buffer');
@@ -15,7 +14,6 @@ var p = require('./package.json'),
 stringify = require('stringify');
 
 var Server = require('karma').Server;
-var runSequence = require('run-sequence');
 
 /* nicer browserify errors */
 var gutil = require('gulp-util');
@@ -39,14 +37,26 @@ for(var k in p.dependencies){
 var projectName= "sd-tree-designer";
 var standaloneName= "SilverDecisions.TreeDesigner";
 
+gulp.task('prepare-test', function(){
+    return gulp
+        .src('test/data/*.json')
+        .pipe(require('gulp-filelist')('data-json-filelist.json', { flatten: true }))
+        .pipe(gulp.dest('test'))
+});
+
+gulp.task('test', gulp.series('prepare-test', function (done) {
+    return runTest(true, done)
+}));
+
+gulp.task('test-watch', gulp.series('prepare-test', function (done) {
+    return runTest(false, done)
+}));
+
 
 gulp.task('clean', function (cb) {
     return del(['tmp', 'dist'], cb);
 });
 
-gulp.task('build-clean', ['clean'], function (cb) {
-    runSequence('clean', 'build', cb)
-});
 
 gulp.task('build-css', function () {
     return buildCss(projectName, './src/styles/*', './dist');
@@ -63,14 +73,22 @@ function buildCss(fileName, src, dest, failOnError) {
         .pipe(plugins.sass())
         .pipe(plugins.concat(fileName + '.css'))
         .pipe(gulp.dest(dest))
-        .pipe(plugins.minifyCss())
+        .pipe(plugins.cleanCss())
         .pipe(plugins.rename({extname: '.min.css'}))
         .pipe(gulp.dest(dest));
 }
 
-
-gulp.task('build', ['build-css', 'build-standalone', 'build-module' ,'build-vendor'], function () {
+gulp.task('build-templates', function () {
+    return gulp.src('src/templates/*.html')
+        .pipe(plugins.html2js('templates.js', {
+            adapter: 'javascript',
+            base: 'templates',
+            name: 'templates'
+        }))
+        .pipe(gulp.dest('dist'));
 });
+
+
 
 gulp.task('build-standalone', function () {
     var jsFileName =  projectName;
@@ -93,19 +111,17 @@ gulp.task('build-vendor', function () {
     return buildJsDependencies(projectName+"-vendor", vendorDependencies, "dist")
 });
 
-gulp.task('prepare-test', function(){
-    return gulp
-        .src('test/data/*.json')
-        .pipe(require('gulp-filelist')('data-json-filelist.json', { flatten: true }))
-        .pipe(gulp.dest('test'))
-});
 
-gulp.task('test', ['prepare-test'], function (done) {
-    return runTest(true, done)
-});
+gulp.task('build', gulp.parallel('build-css', 'build-standalone', 'build-module' ,'build-vendor'));
 
-gulp.task('test-watch', ['prepare-test'], function (done) {
-    return runTest(false, done)
+gulp.task('build-clean', gulp.series('clean', 'build'));
+
+gulp.task('default', gulp.series('build-clean', 'test'));
+
+
+gulp.task('watch', function() {
+    gulp.watch(['./src/**/*.js','./src/**/*.html', './src/i18n/*.*json'], ['build-module']);
+    gulp.watch(['./src/styles/*.*css'], ['build-css']);
 });
 
 function runTest(singleRun, done){
@@ -150,7 +166,7 @@ function buildJsDependencies(jsFileName, moduleNames, dest, failOnError){
 
 function finishBrowserifyBuild(b, jsFileName, dest, failOnError){
     var pipe = b
-        .transform("babelify", {presets: ["es2015"],  plugins: ["transform-class-properties", "transform-object-assign", ["babel-plugin-transform-builtin-extend", {globals: ["Error"]}]]})
+        .transform("babelify", {presets: ["@babel/preset-env"],  plugins: ["transform-class-properties", "transform-object-assign", "@babel/plugin-proposal-object-rest-spread", ["babel-plugin-transform-builtin-extend", {globals: ["Error"]}]]})
         .bundle();
     if(!failOnError){
         pipe = pipe.on('error', map_error )
@@ -162,7 +178,7 @@ function finishBrowserifyBuild(b, jsFileName, dest, failOnError){
         .pipe(gulp.dest(dest))
         .pipe(buffer());
 
-    var development = (argv.dev === undefined) ? false : true;
+    var development = (argv.dev !== undefined);
     if(!development){
         pipe.pipe(sourcemaps.init({loadMaps: true}))
         // .pipe(plugins.stripDebug())
@@ -179,24 +195,7 @@ function finishBrowserifyBuild(b, jsFileName, dest, failOnError){
     return pipe;
 }
 
-gulp.task('build-templates', function () {
-    return gulp.src('src/templates/*.html')
-        .pipe(plugins.html2js('templates.js', {
-            adapter: 'javascript',
-            base: 'templates',
-            name: 'templates'
-        }))
-        .pipe(gulp.dest('dist'));
-});
 
-gulp.task('default',  function(cb) {
-    runSequence('build-clean', 'test', cb);
-});
-
-gulp.task('watch', function() {
-    gulp.watch(['./src/**/*.js','./src/**/*.html', './src/i18n/*.*json'], ['build-module']);
-    gulp.watch(['./src/styles/*.*css'], ['build-css']);
-});
 
 var onError = function (err) {
     console.log('onError', err);

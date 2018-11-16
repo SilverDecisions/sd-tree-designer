@@ -46,11 +46,12 @@ module.exports = function (config) {
                     "babelify",
                     {
                         "presets": [
-                            "es2015"
+                            "@babel/preset-env"
                         ],
                         "plugins": [
                             "transform-class-properties",
                             "transform-object-assign",
+                            "@babel/plugin-proposal-object-rest-spread",
                             [
                                 "babel-plugin-transform-builtin-extend",
                                 {
@@ -83,6 +84,11 @@ module.exports = function (config) {
                 {'type': 'html', dir: 'coverage'},
                 {'type': 'lcov'}
             ]
+        },
+        client: {
+            jasmine: {
+                random: false
+            }
         }
     });
 };
