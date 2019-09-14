@@ -3,13 +3,8 @@ import {DataModel} from "sd-model";
 
 describe("TreeDesigner", () => {
 
-
-
-    let fixtures = jasmine.getFixtures();
-
-    fixtures.fixturesPath = "base/test/";
-    let fileList = JSON.parse(readFixtures("data-json-filelist.json"));
-    let json = JSON.parse(readFixtures("trees/rockefellerWithParamsNoRandom.json")).data;
+    let fileList = readJsonFile( "base/test/", "data-json-filelist.json");
+    let json = readJsonFile( "base/test/trees/", "rockefellerWithParamsNoRandom.json").data;
     let data;
     let treeDesigner;
     beforeEach(function() {
@@ -92,3 +87,16 @@ describe("TreeDesigner", () => {
     });
 });
 
+function readJsonFile(path, fileName){
+    let result = null;
+    let url = path + fileName;
+    $.ajax({
+        dataType: "json",
+        url: url,
+        success:  (data) => result = data,
+        async: false
+    }).fail(function ($xhr, status, err) {
+        throw new Error('JSON file could not be loaded: ' + url + ' (status: ' + status + ', message: ' + err.message + ')')
+    });
+    return result;
+}
