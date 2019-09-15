@@ -420,10 +420,10 @@ export class TreeDesigner {
 
 
         var nodesContainer = this.mainGroup.selectOrAppend('g.nodes');
-        var nodes = nodesContainer.selectAll('.node').data(this.data.nodes.filter(d=>!d.$hidden), (d,i)=> d.$id);
+        var nodes = nodesContainer.selectAll('.node').data(this.data.nodes.filter(d=>!d.$hidden), (d,i)=> d.id);
         nodes.exit().remove();
         var nodesEnter = nodes.enter().append('g')
-            .attr('id', d=>'node-'+d.$id)
+            .attr('id', d=>'node-'+d.id)
             .attr('class', d=>d.type+'-node node')
             .attr('transform', d=>'translate(' + d.location.x + '  ' + d.location.y + ')');
         nodesEnter.append('path');
@@ -619,10 +619,10 @@ export class TreeDesigner {
             edgesContainer.selectAll("*").remove();
         }
 
-        var edges = edgesContainer.selectAll('.edge').data(this.data.edges.filter(e=>!e.$hidden), (d,i)=> d.$id);
+        var edges = edgesContainer.selectAll('.edge').data(this.data.edges.filter(e=>!e.$hidden), (d,i)=> d.id);
         edges.exit().remove();
         var edgesEnter = edges.enter().append('g')
-            .attr('id', d=>'edge-'+d.$id)
+            .attr('id', d=>'edge-'+d.id)
             .attr('class', 'edge');
 
 
@@ -782,10 +782,10 @@ export class TreeDesigner {
 
 
         var textsContainer = this.mainGroup.selectOrAppend('g.floating-texts');
-        var texts = textsContainer.selectAll('.floating-text').data(this.data.texts, (d,i)=> d.$id);
+        var texts = textsContainer.selectAll('.floating-text').data(this.data.texts, (d,i)=> d.id);
         texts.exit().remove();
         var textsEnter = texts.enter().appendSelector('g.floating-text')
-            .attr('id', d=>'text-'+d.$id);
+            .attr('id', d=>'text-'+d.id);
 
 
         var rectWidth = 40;
@@ -1278,14 +1278,14 @@ export class TreeDesigner {
     }
 
     getNodeD3Selection(node){
-        return this.getNodeD3SelectionById(node.$id);
+        return this.getNodeD3SelectionById(node.id);
     }
 
     getNodeD3SelectionById(id){
         return this.mainGroup.select('#node-'+id);
     }
     getTextD3Selection(text){
-        return this.getTextD3SelectionById(text.$id);
+        return this.getTextD3SelectionById(text.id);
     }
     getTextD3SelectionById(id){
         return this.mainGroup.select('#text-'+id);
@@ -1327,7 +1327,7 @@ export class TreeDesigner {
             this.clearSelection();
         }
         this.config.onEdgeSelected(edge);
-        this.mainGroup.select('#edge-'+edge.$id)
+        this.mainGroup.select('#edge-'+edge.id)
             .classed('selected', true)
             .select('path')
             .attr("marker-end", d => "url(#arrow-selected)")
@@ -1346,7 +1346,7 @@ export class TreeDesigner {
             this.config.onNodeSelected(node);
         }
 
-        this.getNodeD3SelectionById(node.$id).classed('selected', true);
+        this.getNodeD3SelectionById(node.id).classed('selected', true);
     }
 
     selectText(text, clearSelectionBeforeSelect, skipCallback){
@@ -1358,7 +1358,7 @@ export class TreeDesigner {
             this.config.onTextSelected(text)
         }
 
-        this.getTextD3SelectionById(text.$id).classed('selected', true);
+        this.getTextD3SelectionById(text.id).classed('selected', true);
     }
 
     selectSubTree(node, clearSelectionBeforeSelect,skipCallback) {

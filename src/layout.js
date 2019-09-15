@@ -139,7 +139,7 @@ export class Layout{
         var self = this;
         var nodeSize = this.config.nodeSize;
         this.nodeSymbol = d3.symbol().type(d=> self.nodeTypeToSymbol[d.type])
-            .size(d=>self.nodeSymbolSize[d.$id] ? Utils.get(self.targetSymbolSize, d.type+"['"+self.config.nodeSize+"']", 64) : 64);
+            .size(d=>self.nodeSymbolSize[d.id] ? Utils.get(self.targetSymbolSize, d.type+"['"+self.config.nodeSize+"']", 64) : 64);
 
         path
             .each(function (d) {
@@ -152,18 +152,18 @@ export class Layout{
                 if(!size){
                     var box = path.node().getBBox();
                     var error = Math.min(nodeSize / box.width, nodeSize / box.height);
-                    size = error * error * (self.nodeSymbolSize[d.$id]||64);
+                    size = error * error * (self.nodeSymbolSize[d.id]||64);
                     Utils.set(self.targetSymbolSize, d.type+"['"+self.config.nodeSize+"']", size);
                 }
                 if(transition){
                     path =  path.transition();
 
                 }else{
-                    self.nodeSymbolSize[d.$id] = size;
+                    self.nodeSymbolSize[d.id] = size;
                 }
                 path.attr("d", self.nodeSymbol);
                 if(transition){
-                    self.nodeSymbolSize[d.$id] = size;
+                    self.nodeSymbolSize[d.id] = size;
                 }
             });
     }
