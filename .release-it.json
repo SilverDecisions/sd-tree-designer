@@ -1,7 +1,7 @@
 {
   "non-interactive": false,
 
-  "increment": "patch",
+  "increment": false,
   "preReleaseId": null,
   "hooks": {
     "after:bump": ["ncu -u --packageFile package.json sd-utils sd-model", "npm update sd-utils sd-model", "gulp"]
