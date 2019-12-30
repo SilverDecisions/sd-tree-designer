@@ -23,7 +23,8 @@
             "selectSubtree": "Select subtree",
             "fold": "Fold subtree",
             "unfold": "Unfold subtree",
-            "flipSubtree": "Flip subtree"
+            "flipSubtree": "Flip subtree",
+            "payoffsTransformation": "Transform payoffs"
         },
         "edge":{
             "injectDecisionNode": "Inject Decision Node",

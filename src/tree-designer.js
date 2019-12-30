@@ -153,6 +153,7 @@ export class TreeDesignerConfig {
     onSelectionCleared = () => {};
 
     operationsForObject = (o) => [];
+    performOperation = (object, operation) => Promise.resolve();
 
     payoffNames = [null, null];
     maxPayoffsToDisplay = 1;
@@ -1213,7 +1214,7 @@ export class TreeDesigner {
     }
 
     convertNode(node, typeToConvertTo){
-        var self = this;
+        const self = this;
         this.data.saveState();
         this.data.convertNode(node, typeToConvertTo);
         setTimeout(function(){
@@ -1222,17 +1223,18 @@ export class TreeDesigner {
     }
 
     performOperation(object, operation){
-        var self = this;
+        const self = this;
         this.data.saveState();
-        operation.perform(object);
-        setTimeout(function(){
-            self.redraw();
-            self.layout.update();
-        },10)
+        this.config.performOperation(object, operation).then(() => {
+            setTimeout(function(){
+                self.redraw();
+                self.layout.update();
+            },10)
+        });
     }
 
     foldSubtree(node, fold = true, redraw=true){
-        let self = this;
+        const self = this;
         node.folded = fold;
 
         this.data.getAllDescendantNodes(node).forEach(n=>{

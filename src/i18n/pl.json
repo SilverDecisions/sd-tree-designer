@@ -24,7 +24,8 @@
             "selectSubtree": "Zaznacz poddrzewo",
             "fold": "Zwiń poddrzewo",
             "unfold": "Rozwiń poddrzewo",
-            "flipSubtree": "Przewróć poddrzewo"
+            "flipSubtree": "Przewróć poddrzewo",
+            "payoffsTransformation": "Przekształć wypłaty"
         },
         "edge":{
             "injectDecisionNode": "Wstrzyknij Węzeł Decyzyjny",
