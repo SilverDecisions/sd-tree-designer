@@ -23,7 +23,8 @@
             "selectSubtree": "Sélectionner une sous-arborescence",
             "fold": "Plier sous-arbre",
             "unfold": "Déplier arbre sous-arbre",
-            "flipSubtree": "Basculer sous-arbre"
+            "flipSubtree": "Basculer sous-arbre",
+            "payoffsTransformation": "Transformez les gains"
         },
         "edge":{
             "injectDecisionNode": "Injecter un noeud de décision",

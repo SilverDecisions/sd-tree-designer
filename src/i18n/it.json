@@ -22,8 +22,9 @@
             },
             "selectSubtree": "Seleziona Sotto-albero",
             "fold": "Piega sotto-albero",
-            "unfold": "Dispiegarsi sotto-albero",			
-            "flipSubtree": "Ribalta sotto-albero"
+            "unfold": "Dispiegarsi sotto-albero",
+            "flipSubtree": "Ribalta sotto-albero",
+            "payoffsTransformation": "Trasforma i profitti"
         },
         "edge":{
             "injectDecisionNode": "Inietta nodo di decisione",
