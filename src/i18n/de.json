@@ -23,8 +23,9 @@
             "selectSubtree": "Teilbaum wählen",
             "fold": "Teilbaum falten",
             "unfold": "Teilbaum entfalten",
-			
-            "flipSubtree": "Teilbaum umdrehen"
+
+            "flipSubtree": "Teilbaum umdrehen",
+            "payoffsTransformation": "Auszahlungen transformieren"
         },
         "edge":{
             "injectDecisionNode": "Entscheidungsknoten Injizieren",
