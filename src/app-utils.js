@@ -45,16 +45,16 @@ export class AppUtils {
     static placeTextWithEllipsisAndTooltip(textD3Obj, textString, width, tooltip) {
         var ellipsisPlaced = AppUtils.placeTextWithEllipsis(textD3Obj, textString, width);
         if (ellipsisPlaced && tooltip) {
-            textD3Obj.on("mouseover", function (d) {
+            textD3Obj.on("mouseover", function (event, d) {
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);
                 tooltip.html(textString)
-                    .style("left", (d3.event.pageX + 5) + "px")
-                    .style("top", (d3.event.pageY - 28) + "px");
+                    .style("left", (event.pageX + 5) + "px")
+                    .style("top", (event.pageY - 28) + "px");
             });
 
-            textD3Obj.on("mouseout", function (d) {
+            textD3Obj.on("mouseout", function (event, d) {
                 tooltip.transition()
                     .duration(500)
                     .style("opacity", 0);

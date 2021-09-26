@@ -44,6 +44,8 @@ module.exports = function (config) {
                 [
                     "babelify",
                     {
+                        "global": true,
+                        "ignore": ["/\\/node_modules\\/(?!d3-.+\\/)/"],
                         "presets": [
                             "@babel/preset-env"
                         ],

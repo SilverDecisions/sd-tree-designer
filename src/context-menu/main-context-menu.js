@@ -13,14 +13,14 @@ export class MainContextMenu extends ContextMenu {
             var menu = [];
             menu.push({
                 title: i18n.t('contextMenu.main.addDecisionNode'),
-                action: function (elm, d, i) {
+                action: function (elm, d) {
                     var newNode = new model.DecisionNode(mousePosition);
                     treeDesigner.addNode(newNode)
                 }
             });
             menu.push({
                 title: i18n.t('contextMenu.main.addChanceNode'),
-                action: function (elm, d, i) {
+                action: function (elm, d) {
                     var newNode = new model.ChanceNode(mousePosition);
                     treeDesigner.addNode(newNode)
                 }
@@ -28,7 +28,7 @@ export class MainContextMenu extends ContextMenu {
             menu.push({divider: true});
             menu.push({
                 title: i18n.t('contextMenu.main.addText'),
-                action: function (elm, d, i) {
+                action: function (elm, d) {
                     var newText = new model.Text(mousePosition);
                     treeDesigner.addText(newText);
                 },
@@ -37,7 +37,7 @@ export class MainContextMenu extends ContextMenu {
             menu.push({divider: true});
             menu.push({
                 title: i18n.t('contextMenu.main.paste'),
-                action: function (elm, d, i) {
+                action: function (elm, d) {
                     treeDesigner.pasteToNewLocation(mousePosition);
                 },
                 disabled: !treeDesigner.copiedNodes || !treeDesigner.copiedNodes.length
@@ -47,16 +47,16 @@ export class MainContextMenu extends ContextMenu {
 
             menu.push({
                 title: i18n.t('contextMenu.main.selectAllNodes'),
-                action: function (elm, d, i) {
+                action: function (elm, d) {
                     treeDesigner.selectAllNodes();
                 }
             });
             return menu;
         };
 
-        super(menu, {onOpen: () => {
+        super(menu, {onOpen: (event) => {
             treeDesigner.clearSelection();
-            mousePosition = new model.Point(d3.mouse(treeDesigner.svg.node())).move(treeDesigner.getMainGroupTranslation(true));
+            mousePosition = new model.Point(d3.pointer(event, treeDesigner.svg.node())).move(treeDesigner.getMainGroupTranslation(true));
 
         }});
         this.treeDesigner = treeDesigner;

@@ -22,7 +22,6 @@ export class Tooltip {
     }
 
     static updatePosition(xOffset = 5, yOffset = 28, event) {
-        event = event || d3.event;
         Tooltip.getContainer()
             .style("left", (event.pageX + xOffset) + "px")
             .style("top", (event.pageY - yOffset) + "px");
@@ -37,7 +36,8 @@ export class Tooltip {
     }
 
     static attach(target, htmlOrFn, xOffset, yOffset) {
-        target.on('mouseover', function (d, i) {
+        target.on('mouseover', function (event, d) {
+            const i = target.nodes().indexOf(this);
             var html = null;
             if (Utils.isFunction(htmlOrFn)) {
                 html = htmlOrFn(d, i);
@@ -46,14 +46,14 @@ export class Tooltip {
             }
 
             if (html !== null && html !== undefined && html !== '') {
-                Tooltip.show(html, xOffset, yOffset);
+                Tooltip.show(html, xOffset, yOffset, event);
             }else{
                 Tooltip.hide(0);
             }
 
-        }).on('mousemove', function (d) {
-            Tooltip.updatePosition(xOffset, yOffset);
-        }).on("mouseout", function (d) {
+        }).on('mousemove', function (event, d) {
+            Tooltip.updatePosition(xOffset, yOffset, event);
+        }).on("mouseout", function (event, d) {
             Tooltip.hide();
         });
     }

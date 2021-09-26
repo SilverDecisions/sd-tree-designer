@@ -657,7 +657,7 @@ export class TreeDesigner {
             // .attr("shape-rendering", "optimizeQuality")
 
 
-        edgesMerge.on('click', d=>{
+        edgesMerge.on('click', (event, d) => {
             self.selectEdge(d, true)
         });
 
@@ -915,8 +915,8 @@ export class TreeDesigner {
         this.updateBrushExtent();
 
         brushContainer.select('.overlay').on("mousemove.edgeSelection", mousemoved);
-        function mousemoved() {
-            var m = d3.mouse(this);
+        function mousemoved(event) {
+            var m = d3.pointer(event);
             var mgt = self.getMainGroupTranslation();
             var margin = 10;
 
@@ -946,8 +946,8 @@ export class TreeDesigner {
 
         }
 
-        function brushstart() {
-            if (!d3.event.selection) return;
+        function brushstart(event) {
+            if (!event.selection) return;
             if(self.hoveredEdge){
                 self.selectEdge(self.hoveredEdge.datum(), true)
             }else{
@@ -957,8 +957,8 @@ export class TreeDesigner {
         }
 
         // Highlight the selected nodes.
-        function brushmove() {
-            var s = d3.event.selection;
+        function brushmove(event) {
+            var s = event.selection;
             if(!s)return;
 
             self.mainGroup.selectAll(".node").classed('selected', function (d) {
@@ -972,8 +972,8 @@ export class TreeDesigner {
             });
         }
         // If the brush is empty, select all circles.
-        function brushend() {
-            if (!d3.event.selection) return;
+        function brushend(event) {
+            if (!event.selection) return;
             brush.move(brushContainer, null);
 
             var selectedNodes = self.getSelectedNodes();

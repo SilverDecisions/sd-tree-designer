@@ -50,19 +50,19 @@ export class NodeContextMenu extends ContextMenu {
             if(!d.folded){
                 menu.push({
                     title: i18n.t('contextMenu.node.addDecisionNode'),
-                    action: function (elm, d, i) {
+                    action: function (elm, d) {
                         treeDesigner.addDecisionNode(d)
                     }
                 });
                 menu.push({
                     title: i18n.t('contextMenu.node.addChanceNode'),
-                    action: function (elm, d, i) {
+                    action: function (elm, d) {
                         treeDesigner.addChanceNode(d)
                     }
                 });
                 menu.push({
                     title: i18n.t('contextMenu.node.addTerminalNode'),
-                    action: function (elm, d, i) {
+                    action: function (elm, d) {
                         treeDesigner.addTerminalNode(d)
                     }
                 });
@@ -78,7 +78,7 @@ export class NodeContextMenu extends ContextMenu {
             menu.push({divider: true});
             menu.push({
                 title: i18n.t('contextMenu.node.selectSubtree'),
-                action: function (elm, d, i) {
+                action: function (elm, d) {
                     treeDesigner.selectSubTree(d, true);
                 }
             });
@@ -86,14 +86,14 @@ export class NodeContextMenu extends ContextMenu {
             if(!d.folded){
                 menu.push({
                     title: i18n.t('contextMenu.node.fold'),
-                    action: function (elm, d, i) {
+                    action: function (elm, d) {
                         treeDesigner.foldSubtree(d);
                     }
                 });
             }else{
                 menu.push({
                     title: i18n.t('contextMenu.node.unfold'),
-                    action: function (elm, d, i) {
+                    action: function (elm, d) {
                         treeDesigner.foldSubtree(d, false);
                     }
                 });
@@ -106,7 +106,7 @@ export class NodeContextMenu extends ContextMenu {
                     operations.forEach(op=>{
                         menu.push({
                             title: i18n.t('contextMenu.node.'+op.name),
-                            action: function (elm, d, i) {
+                            action: function (elm, d) {
                                 treeDesigner.performOperation(d, op);
                             },
                             disabled: !op.canPerform(d)
@@ -157,7 +157,7 @@ export class NodeContextMenu extends ContextMenu {
     static getNodeConversionOption(typeToConvertTo, treeDesigner){
         return {
             title: i18n.t('contextMenu.node.convert.'+typeToConvertTo),
-            action: function (elm, d, i) {
+            action: function (elm, d) {
                 treeDesigner.convertNode(d, typeToConvertTo);
             },
         }

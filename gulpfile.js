@@ -56,7 +56,7 @@ gulp.task('test-watch', gulp.series('prepare-test', function (done) {
 
 
 gulp.task('clean', function (cb) {
-    return del(['tmp', 'dist'], cb);
+    return del(['tmp', 'dist', 'coverage'], cb);
 });
 
 
