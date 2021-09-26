@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var del = require('del');
 var merge = require('merge-stream');
 var plugins = require('gulp-load-plugins')();
+const sass = require('gulp-sass')(require('sass'));
 var browserSync = require('browser-sync').create();
 var argv = require('yargs').argv;
 
@@ -33,6 +34,7 @@ for(var k in p.dependencies){
     }
 }
 
+const browserifyTransforms = p.browserify.transform.reduce((acc, curr) => (acc[curr[0]] = curr[1], acc), {});
 
 var projectName= "sd-tree-designer";
 var standaloneName= "SilverDecisions.TreeDesigner";
@@ -70,7 +72,7 @@ function buildCss(fileName, src, dest, failOnError) {
     }
 
     return pipe.pipe(plugins.plumber({errorHandler: (err)=>onError(err,failOnError)}))
-        .pipe(plugins.sass())
+        .pipe(sass())
         .pipe(plugins.concat(fileName + '.css'))
         .pipe(gulp.dest(dest))
         .pipe(plugins.cleanCss())
@@ -99,9 +101,7 @@ gulp.task('build-module', function () {
     var jsFileName =  projectName;
     var b = browserify({
         debug: true,
-    }).transform(stringify, {
-        appliesTo: { includeExtensions: ['.html'] }
-    })
+    }).transform(stringify, browserifyTransforms['stringify'])
         .require('./index.js', {expose: projectName} )
         .external(dependencies);
     return finishBrowserifyBuild(b, jsFileName, "dist")
@@ -166,7 +166,7 @@ function buildJsDependencies(jsFileName, moduleNames, dest, failOnError){
 
 function finishBrowserifyBuild(b, jsFileName, dest, failOnError){
     var pipe = b
-        .transform("babelify", {presets: ["@babel/preset-env"],  plugins: ["transform-class-properties", "transform-object-assign", "@babel/plugin-proposal-object-rest-spread", ["babel-plugin-transform-builtin-extend", {globals: ["Error"]}]]})
+        .transform("babelify", browserifyTransforms['babelify'])
         .bundle();
     if(!failOnError){
         pipe = pipe.on('error', map_error )
