@@ -20,7 +20,8 @@ var data = AppUtils.getJSON("./data/sample-tree.json", function(data, err){
     cm.updateDisplayValues();
 
     app = new TreeDesigner('#app-container', dataModel,{
-        "fontSize": "12px"
+        "fontSize": "12px",
+        lng: lng
     });
 });
 
