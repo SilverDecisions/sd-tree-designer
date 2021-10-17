@@ -36,7 +36,7 @@ for(var k in p.dependencies){
 
 const browserifyTransforms = p.browserify.transform.reduce((acc, curr) => (acc[curr[0]] = curr[1], acc), {});
 
-var projectName= "sd-tree-designer";
+var projectName= p.name;
 var standaloneName= "SilverDecisions.TreeDesigner";
 
 gulp.task('prepare-test', function(){
@@ -128,9 +128,7 @@ function runTest(singleRun, done){
     return new Server({
         configFile: __dirname + '/karma.conf.js',
         singleRun: singleRun
-    }, function (err) {
-        done(err);
-    }).start();
+    }, done).start();
 }
 
 
