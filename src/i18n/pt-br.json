@@ -1,0 +1,67 @@
+{
+    "contextMenu":{
+        "main":{
+            "addDecisionNode": "Adicionar nó de decisão",
+            "addChanceNode": "Adicionar Nó de probabilidade",
+            "addText": "Adicionar Texto",
+            "paste": "Colar",
+            "selectAllNodes": "Selecionar todos os nós"
+        },
+        "node":{
+            "copy": "Copiar",
+            "cut": "Cortar",
+            "paste": "Colar",
+            "delete": "Excluir",
+            "addDecisionNode": "Adicionar nó de decisão",
+            "addChanceNode": "Adicionar Nó de probabilidade",
+            "addTerminalNode": "Adicionar Nó Terminal",
+            "convert":{
+                "decision": "Como nó de decisão",
+                "chance": "Como Nó de Chance",
+                "terminal": "Como Nó Terminal"
+            },
+            "selectSubtree": "Selecionar subárvore",
+            "fold": "Dobrar subárvore",
+            "unfold": "Desdobrar subárvore",
+            "flipSubtree": "Inverter subárvore",
+            "payoffsTransformation": "Transformar pesos"
+        },
+        "edge":{
+            "injectDecisionNode": "Injetar Nó de Decisão",
+            "injectChanceNode": "Injetar Nó de Chance"
+        },
+        "text":{
+            "delete": "Excluir"
+        }
+    },
+    "validation":{
+        "incompletePath": "O caminho não termina com o nó terminal",
+        "probabilityDoNotSumUpTo1": "Probabilidades não somam até 1",
+        "invalidProbability": "Probabilidade inválida na borda # {{number}}",
+        "invalidPayoff": "Pagamento inválido na borda # {{number}}"
+    },
+    "growl":{
+        "brushDisabled": "Pincel de seleção desativado",
+        "brushEnabled": "Pincel de seleção habilitado"
+    },
+    "tooltip":{
+        "node":{
+            "payoff": {
+                "default": "Peso {{number}}",
+                "named": "{{name}}"
+            },
+            "aggregatedPayoff": {
+                "default": "Peso agregado {{number}}",
+                "named": "Agregado {{name}}"
+            },
+            "probabilityToEnter": "Probabilidade de entrar"
+        },
+        "edge":{
+            "payoff": {
+                "default": "Peso {{number}}: {{value}}",
+                "named": "{{name}}: {{value}}"
+            },
+            "probability": "Probabilidade: {{value}}"
+        }
+    }
+}
