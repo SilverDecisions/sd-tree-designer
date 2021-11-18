@@ -142,6 +142,7 @@ export class TreeDesignerConfig {
     hidePayoffs=false;
     hideProbabilities=false;
     raw=false;
+    preserveFoldingOfNestedSubtrees = true;
 
 
     payoffNumberFormatter = (v, i)=> v;
@@ -1233,23 +1234,26 @@ export class TreeDesigner {
         });
     }
 
-    foldSubtree(node, fold = true, redraw=true){
+    foldSubtree(node, fold = true, redraw = true) {
         const self = this;
         node.folded = fold;
+        const preserveNestedFolding = self.config.preserveFoldingOfNestedSubtrees;
 
-        this.data.getAllDescendantNodes(node).forEach(n=>{
-            n.$hidden = fold;
-            n.folded = false;
+        this.data.getAllDescendantNodes(node).forEach(n => {
+            n.$hidden = fold || (n.$parent && (n.$parent.folded || n.$parent.$hidden));
+            if (!preserveNestedFolding) {
+                n.folded = false;
+            }
         });
-        this.data.getAllDescendantEdges(node).forEach(e=>e.$hidden = fold);
+        this.data.getAllDescendantEdges(node).forEach(e => e.$hidden = e.parentNode.folded || e.parentNode.$hidden);
 
-        if(!redraw){
+        if (!redraw) {
             return;
         }
-        setTimeout(function(){
+        setTimeout(function () {
             self.redraw();
             self.layout.update();
-        },10)
+        }, 10)
     }
 
     updateVisibility(node = null){
