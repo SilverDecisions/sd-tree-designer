@@ -13,7 +13,7 @@
             "paste": "Colar",
             "delete": "Excluir",
             "addDecisionNode": "Adicionar nó de decisão",
-            "addChanceNode": "Adicionar Nó de probabilidade",
+            "addChanceNode": "Adicionar Nó de chance",
             "addTerminalNode": "Adicionar Nó Terminal",
             "convert":{
                 "decision": "Como nó de decisão",
@@ -47,18 +47,18 @@
     "tooltip":{
         "node":{
             "payoff": {
-                "default": "Peso {{number}}",
+                "default": "Pagar {{number}}",
                 "named": "{{name}}"
             },
             "aggregatedPayoff": {
-                "default": "Peso agregado {{number}}",
+                "default": "Pagar agregado {{number}}",
                 "named": "Agregado {{name}}"
             },
             "probabilityToEnter": "Probabilidade de entrar"
         },
         "edge":{
             "payoff": {
-                "default": "Peso {{number}}: {{value}}",
+                "default": "Pagar {{number}}: {{value}}",
                 "named": "{{name}}: {{value}}"
             },
             "probability": "Probabilidade: {{value}}"
