@@ -598,7 +598,8 @@ export class TreeDesigner {
     }
 
     updateTextLines(d){ //helper method for splitting text to tspans
-        var lines = d.name ? d.name.split('\n') : [];
+        let value = d.displayValue("name") || d.name;
+        var lines = value ? value.split('\n') : [];
         lines.reverse();
         var tspans = d3.select(this).selectAll('tspan').data(lines);
         tspans.enter().append('tspan')
@@ -804,7 +805,10 @@ export class TreeDesigner {
 
         textsMergeT.attr('transform', d=>'translate(' + d.location.x + '  ' + d.location.y + ')');
 
-        var tspans = textsMerge.select('text').selectAll('tspan').data(d=>d.value ? d.value.split('\n') : []);
+        var tspans = textsMerge.select('text').selectAll('tspan').data(d=>{
+            let value = d.$displayValue || d.value;
+            return value ? value.split('\n') : []
+        });
 
         tspans.enter().append('tspan')
             .merge(tspans)
