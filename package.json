@@ -1,6 +1,6 @@
 {
   "name": "sd-tree-designer",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "SilverDecisions tree designer module",
   "main": "index.js",
   "scripts": {
@@ -113,7 +113,7 @@
     "karma-intl-shim": "^1.0.3",
     "karma-jasmine": "^4.0.1",
     "merge-stream": "^2.0.0",
-    "release-it": "^14.11.6",
+    "release-it": "^14.11.8",
     "sass": "^1.43.2",
     "sd-computations": "^0.6.0",
     "stringify": "^5.2.0",
